@@ -33,5 +33,18 @@
     renderMath(list);
   };
   graph.addEventListener('click', e => { const n = e.target.closest('.node'); if (n) show(n.dataset.f, n.dataset.t); });
+  // Small screens: chips instead of the map.
+  const chips = document.createElement('div'); chips.className = 'tr-chips';
+  const count = (k, v) => T.items.filter(it => it[k] === v).length;
+  chips.innerHTML = '<p>Areas</p>' + F.map(f => `<button class="chip" data-f="${f}">${T.fields[f]} (${count('field', f)})</button>`).join('') +
+    '<p>Rainbow structures</p>' + G.map(t => `<button class="chip" data-t="${t}">${T.targets[t]} (${count('target', t)})</button>`).join('');
+  graph.after(chips);
+  chips.addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    const was = b.classList.contains('on');
+    chips.querySelectorAll('button').forEach(x => x.classList.remove('on'));
+    if (was) { show(); return; }
+    b.classList.add('on'); show(b.dataset.f, b.dataset.t);
+  });
   show();
 })();

@@ -25,7 +25,20 @@
     s += '</g>';
   });
   s += '</svg>';
-  const chart = document.getElementById('chart'); chart.innerHTML = s;
+  const chart = document.getElementById('chart'); chart.innerHTML = s; chart.classList.add('tl-wide');
+  // Small screens: one card per conjecture, each with its own track and details.
+  const yMin = 1780, track = y => 6 + 288 * (x(y) - x(yMin)) / (x(2027) - x(yMin));
+  const cards = document.createElement('div'); cards.className = 'tl-cards';
+  cards.innerHTML = rows.map(h => {
+    const c = colour(plainStatus(h)), years = h.milestones.map(m => m.year).filter(Boolean), last = Math.max(h.posed, ...years);
+    return `<details class="tl-card" style="--dot:${c}"><summary>${h.name} <span class="yrs">${h.posedLabel}–${last > h.posed ? last : ''}</span>
+      <svg viewBox="0 0 300 14"><line x1="${track(h.posed)}" x2="${track(last)}" y1="7" y2="7" stroke="${c}" stroke-width="2"/>
+      ${years.map(y => `<circle cx="${track(y)}" cy="7" r="3.6" fill="#fff" stroke="${c}" stroke-width="1.6"/>`).join('')}
+      <rect x="${track(h.posed) - 3.4}" y="3.6" width="6.8" height="6.8" fill="${c}" transform="rotate(45 ${track(h.posed)} 7)"/></svg></summary>
+      <p>${h.statement}</p><ul class="stones">${h.milestones.map(m => `<li>${m.label ? '<b>' + m.label + '</b>: ' : ''}${m.text}</li>`).join('')}</ul>
+      <p><span class="chip">${h.status}</span> · ${h.where}</p></details>`;
+  }).join('');
+  chart.after(cards); renderMath(cards);
   const detail = document.getElementById('detail');
   const pick = i => {
     const h = rows[i];

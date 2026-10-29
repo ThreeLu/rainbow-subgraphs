@@ -37,7 +37,7 @@ function setupTips() {
       }
     }
     if (!html) return;
-    tip.innerHTML = html; renderMath(tip);
+    tip.innerHTML = html + `<a class="go" href="${a.getAttribute('href')}">Go to ${a.classList.contains('cite') ? 'reference' : 'text'} →</a>`; renderMath(tip);
     const r = a.getBoundingClientRect();
     tip.style.display = 'block';
     const w = tip.offsetWidth;
@@ -54,6 +54,13 @@ function setupTips() {
     if (e.target.closest('a.xref, a.cite')) { clearTimeout(timer); timer = setTimeout(() => { tip.style.display = 'none'; }, 150); }
   });
   tip.addEventListener('mouseover', () => clearTimeout(timer));
+  if (window.matchMedia('(hover: none)').matches) {
+    document.addEventListener('click', e => {
+      const a = e.target.closest('a.xref, a.cite');
+      if (a && !a.closest('#tip')) { e.preventDefault(); show(a); return; }
+      if (!e.target.closest('#tip')) tip.style.display = 'none';
+    });
+  }
   tip.addEventListener('mouseleave', () => { tip.style.display = 'none'; });
 }
 

@@ -96,7 +96,7 @@ table.three tbody tr:last-child td { border-bottom: 2px solid var(--ink); }
 table.three tr.grp td { font-style: italic; padding-top: .8rem; border-bottom: 1px solid var(--line); }
 /* charts */
 .chart { margin: 1rem 0; overflow-x: auto; }
-.chart svg { display: block; font-family: var(--sans); }
+.chart > svg { display: block; font-family: var(--sans); }
 .legend { display: flex; flex-wrap: wrap; gap: .4rem 1rem; font: 13px var(--sans); color: var(--muted); }
 .legend span::before { content: ""; display: inline-block; width: .8rem; height: .8rem; border-radius: 50%; margin-right: .3rem; vertical-align: -1px; background: var(--dot); }
 .detail { margin-top: 1rem; padding: 1rem 1.2rem; background: #fff; border: 1px solid var(--line); border-radius: 8px; min-height: 5rem; }
@@ -122,3 +122,56 @@ table.three tr.grp td { font-style: italic; padding-top: .8rem; border-bottom: 1
   h1 { font-size: 1.6rem; } .hero h1 { font-size: 1.8rem; }
 }
 @media (max-width: 900px) { .toc-title::after { content: " ▾"; color: var(--muted); } details.toc:not([open]) .toc-title::after { content: " ▸"; } }
+/* citations and references */
+sup.cites { font: 600 .68em/1 var(--sans); vertical-align: super; margin-left: 1px; color: var(--muted); white-space: nowrap; }
+sup.cites a { color: #6b7a99; }
+.letters { position: sticky; top: 3.1rem; z-index: 5; display: flex; flex-wrap: wrap; gap: .1rem .5rem; padding: .5rem 0; background: var(--bg);
+  border-bottom: 1px solid var(--line); font: 600 14px var(--sans); }
+.refgroup h2 { font-family: var(--sans); font-size: 1.1rem; color: var(--muted); border-bottom: 1px solid var(--line); padding-bottom: .2rem; margin-top: 1.8rem; }
+.ref { display: grid; grid-template-columns: 2.6rem minmax(0, 1fr); gap: .3rem; padding: .55rem 0; border-bottom: 1px dashed #e6e8ec; }
+.ref:target { background: #fff7d6; }
+.refnum { font: 13px var(--sans); color: var(--muted); padding-top: .2rem; }
+.ref .ti { font-weight: 600; }
+.ref .au { color: #2a2d33; }
+.ref .det { color: var(--muted); font-size: .93rem; }
+.ref .meta { display: flex; flex-wrap: wrap; gap: .3rem .9rem; margin-top: .2rem; font: 13px var(--sans); color: var(--muted); }
+.pill { border: 1px solid var(--line); border-radius: 99px; padding: 0 .5rem; }
+/* KaTeX: the hidden MathML copy must not widen the page; long displays scroll inside themselves */
+.katex-mathml { width: 1px; height: 1px; overflow: hidden; }
+.katex-display { overflow-x: auto; overflow-y: hidden; padding: .1rem 0; }
+#tip .go { display: none; margin-top: .4rem; font: 600 14px var(--sans); }
+/* mobile timeline cards and translation chips */
+.tl-cards { display: none; }
+.tl-card { padding: .6rem .8rem; margin: .5rem 0; background: #fff; border: 1px solid var(--line); border-left: 4px solid var(--dot); border-radius: 6px; }
+.tl-card summary { cursor: pointer; font-weight: 600; list-style: none; }
+.tl-card summary::-webkit-details-marker { display: none; }
+.tl-card .yrs { font: 13px var(--sans); color: var(--muted); font-weight: 400; }
+.tl-card summary > svg { display: block; margin-top: .35rem; width: 100%; height: auto; }
+.tr-chips { display: none; }
+.tr-chips p { margin: .8rem 0 .3rem; font: 600 13px var(--sans); color: var(--muted); }
+.tr-chips button { margin: 0 .3rem .35rem 0; }
+.tr-chips button.on { outline: 2px solid var(--accent); }
+@media (max-width: 700px) {
+  body { font-size: 16px; }
+  .wrap { padding: 1rem 1rem 2.5rem; }
+  .stmt { padding: .6rem .75rem; }
+  .filters select { flex: 1 1 100%; }
+  .chart.tl-wide, #graph { display: none; }
+  .tl-cards, .tr-chips { display: block; }
+  #tip { left: 8px !important; right: 8px; max-width: none; }
+  #tip .go { display: block; }
+  .ref { grid-template-columns: 2rem minmax(0, 1fr); }
+  .letters { top: 2.9rem; font-size: 13px; }
+  table.three { font-size: 13.5px; }
+  footer { padding: 1rem; }
+}
+@media (max-width: 700px) {
+  table.three, table.three tbody, table.three tr, table.three td { display: block; width: 100%; }
+  table.three thead { display: none; }
+  table.three tbody tr { padding: .5rem 0; border-bottom: 1px solid var(--line); }
+  table.three tbody tr:last-child td { border-bottom: none; }
+  table.three tbody tr.grp { border-bottom: none; padding-bottom: 0; }
+  table.three tr.grp td { padding: 1rem 0 .2rem; border-bottom: 1px solid var(--ink); }
+  table.three td { padding: .12rem 0; }
+  table.three td[data-h]::before { content: attr(data-h) ": "; font: 600 12px var(--sans); color: var(--muted); }
+}
